@@ -1,6 +1,6 @@
 name: BuildAndRelease
 
-on: [push]
+on: push
 
 jobs:
   deploy:
