@@ -17,3 +17,11 @@ jobs:
       run: | 
         dir
         cat /etc/os-release
+    - name: Upload Release Asset
+    - uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        tag: prerelease
+        prerelease: true
+        artifacts: "texteditor.jar"
+        token: ${{ secrets.GITHUB_TOKEN }}
