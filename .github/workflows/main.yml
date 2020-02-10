@@ -22,5 +22,7 @@ jobs:
         allowUpdates: true
         tag: prerelease
         prerelease: true
+        name: "test automation release with custom name" 
+        body: "test change body option." 
         artifacts: "texteditor.jar"
-        token: ${{ secrets.GITHUB_TOKEN }}
+token: ${{ secrets.GITHUB_TOKEN }}
