@@ -21,8 +21,8 @@ jobs:
       with:
         allowUpdates: true
         tag: release
-        prerelease: true
-        name: "update v0.2" 
-        body: "fixed resources folder" 
+        prerelease: false
+        name: "update v0.3" 
+        body: "prerelease to release\n1: A little code cleanup\n2: Adding About Window" 
         artifacts: "texteditor.jar"
         token: ${{ secrets.GITHUB_TOKEN }}

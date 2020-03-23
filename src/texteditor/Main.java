@@ -63,21 +63,24 @@ class Main {
     });
     
     JMenuBar menubar = new JMenuBar();
-  
     JTextArea textarea = new JTextArea();
-  
-    frame.setJMenuBar(menubar);
     JMenu file = new JMenu("File");
-    menubar.add(file);
     JMenuItem newfile = new JMenuItem("New...");
-    file.add(newfile);
     JMenuItem open = new JMenuItem("Open...");
-    file.add(open);
     JMenuItem save = new JMenuItem("Save...");
-    file.add(save);
     JMenuItem exit = new JMenuItem("Exit...");
+    JMenu help = new JMenu("Help");
+    JMenuItem about = new JMenuItem("About...");
+
+    frame.setJMenuBar(menubar);
+    menubar.add(file);
+    file.add(newfile);
+    file.add(open);
+    file.add(save);
     file.add(exit);
-  
+    menubar.add(help);
+    help.add(about);
+
     textarea.setForeground(Color.black);
     textarea.setFont(new Font("Arai", Font.ITALIC, 16));
     textarea.setEditable(true);
@@ -139,6 +142,22 @@ class Main {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.exit(0);
+      }
+    });
+
+    about.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ImageIcon originalIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/icon.png"));
+        ImageIcon icon = new ImageIcon(originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+
+        JOptionPane.showMessageDialog(
+          frame,
+          "Made by. Ced(Zel)",
+          "About",
+          JOptionPane.INFORMATION_MESSAGE,
+          icon
+        );
       }
     });
     

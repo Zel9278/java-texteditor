@@ -1,2 +1,8 @@
 README.txt
 texteditor.jar
+hs_err*
+.classpath
+.project
+/.settings/*
+/.vs/*
+/.vscode/*
