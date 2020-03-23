@@ -10,7 +10,7 @@ jobs:
     - name: Build
       run: |
         javac -Xdiags:verbose -sourcepath src -d classes src/texteditor/Main.java
-        jar cvfm texteditor.jar META-INF/MANIFEST.MF -C classes . resources/*
+        jar cvfm texteditor.jar META-INF/MANIFEST.MF -C classes .
     - name: Upload Release Asset
       uses: marvinpinto/action-automatic-releases@v0.2.2
       with:
@@ -20,9 +20,9 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        tag: prerelease
+        tag: release
         prerelease: true
-        name: "update" 
-        body: "just test\n*test" 
+        name: "update v0.2" 
+        body: "fixed resources folder" 
         artifacts: "texteditor.jar"
         token: ${{ secrets.GITHUB_TOKEN }}
