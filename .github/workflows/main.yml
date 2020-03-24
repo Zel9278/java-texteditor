@@ -22,7 +22,7 @@ jobs:
         allowUpdates: true
         tag: release
         prerelease: false
-        name: "update v0.3" 
-        body: "prerelease to release\n1: A little code cleanup\n2: Adding About Window" 
+        name: "update v0.4" 
+        body: "Adding text selection events(SelectAll, Copy, Cut, Paste" 
         artifacts: "texteditor.jar"
         token: ${{ secrets.GITHUB_TOKEN }}

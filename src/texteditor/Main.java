@@ -7,7 +7,9 @@ import java.io.*;
 import javax.swing.*;
 
 class Main {
-  
+  JTextArea textarea;
+  JPopupMenu popup;
+
   public static void main(String args[]){
     new Main();
   }
@@ -63,14 +65,20 @@ class Main {
     });
     
     JMenuBar menubar = new JMenuBar();
-    JTextArea textarea = new JTextArea();
     JMenu file = new JMenu("File");
     JMenuItem newfile = new JMenuItem("New...");
     JMenuItem open = new JMenuItem("Open...");
     JMenuItem save = new JMenuItem("Save...");
     JMenuItem exit = new JMenuItem("Exit...");
+    JMenu edit = new JMenu("Edit");
+    JMenuItem selectall = new JMenuItem("SelectAll...");
+    JMenuItem copy = new JMenuItem("Copy...");
+    JMenuItem cut = new JMenuItem("Cut...");
+    JMenuItem paste = new JMenuItem("Paste...");
     JMenu help = new JMenu("Help");
     JMenuItem about = new JMenuItem("About...");
+
+    textarea = new JTextArea();
 
     frame.setJMenuBar(menubar);
     menubar.add(file);
@@ -78,6 +86,11 @@ class Main {
     file.add(open);
     file.add(save);
     file.add(exit);
+    menubar.add(edit);
+    edit.add(selectall);
+    edit.add(copy);
+    edit.add(cut);
+    edit.add(paste);
     menubar.add(help);
     help.add(about);
 
@@ -145,6 +158,34 @@ class Main {
       }
     });
 
+    selectall.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.selectAll();
+      }
+    });
+
+    copy.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.copy();
+      }
+    });
+
+    cut.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.cut();
+      }
+    });
+
+    paste.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.paste();
+      }
+    });
+
     about.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -163,10 +204,37 @@ class Main {
     
     JScrollPane scrollpane = new JScrollPane(textarea);
     scrollpane.setPreferredSize(new Dimension(100, 100));
+
     JPanel panel = new JPanel();
     frame.add(panel);  
     panel.add(scrollpane);
     frame.getContentPane().add(scrollpane, BorderLayout.CENTER);
     frame.setVisible(true);
   };
+
+  public void mouseReleased(MouseEvent e){
+    showPopup(e);
+  }
+
+  public void mousePressed(MouseEvent e){
+    showPopup(e);
+  }
+
+  private void showPopup(MouseEvent e){
+    if(e.isPopupTrigger()) {
+      popup = new JPopupMenu();
+      JMenuItem copy = new JMenuItem("Copy");
+      popup.add(copy);
+      textarea.add(popup);
+      popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+  }
 }
+
+/*
+textarea.getSelectedText()
+textarea.selectAll()
+textarea.copy()
+textarea.cut()
+textarea.paste()
+*/
