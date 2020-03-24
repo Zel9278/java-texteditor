@@ -22,7 +22,7 @@ jobs:
         allowUpdates: true
         tag: release
         prerelease: false
-        name: "update v0.4" 
-        body: "Adding text selection events(SelectAll, Copy, Cut, Paste" 
+        name: "update v0.5" 
+        body: "Added right click event(popup menu)" 
         artifacts: "texteditor.jar"
         token: ${{ secrets.GITHUB_TOKEN }}

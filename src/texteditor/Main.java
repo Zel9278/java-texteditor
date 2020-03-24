@@ -7,6 +7,7 @@ import java.io.*;
 import javax.swing.*;
 
 class Main {
+  JFrame frame;
   JTextArea textarea;
   JPopupMenu popup;
 
@@ -49,7 +50,7 @@ class Main {
   }
   
   private void mainEditor() {
-    JFrame frame = new JFrame("Text Editor");
+    frame = new JFrame("Text Editor");
     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     frame.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("resources/icon.png")).getImage());
     
@@ -205,30 +206,51 @@ class Main {
     JScrollPane scrollpane = new JScrollPane(textarea);
     scrollpane.setPreferredSize(new Dimension(100, 100));
 
+    popup = new JPopupMenu();
+    JMenuItem selectall_popup = new JMenuItem("SelectAll");
+    JMenuItem copy_popup = new JMenuItem("Copy");
+    JMenuItem cut_popup = new JMenuItem("Cut");
+    JMenuItem paste_popup = new JMenuItem("Paste");
+    popup.add(selectall_popup);
+    popup.add(copy_popup);
+    popup.add(cut_popup);
+    popup.add(paste_popup);
+    textarea.setComponentPopupMenu(popup);
+
+    selectall_popup.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.selectAll();
+      }
+    });
+
+    copy_popup.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.copy();
+      }
+    });
+
+    cut_popup.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.cut();
+      }
+    });
+
+    paste_popup.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.paste();
+      }
+    });
+
     JPanel panel = new JPanel();
     frame.add(panel);  
     panel.add(scrollpane);
     frame.getContentPane().add(scrollpane, BorderLayout.CENTER);
     frame.setVisible(true);
   };
-
-  public void mouseReleased(MouseEvent e){
-    showPopup(e);
-  }
-
-  public void mousePressed(MouseEvent e){
-    showPopup(e);
-  }
-
-  private void showPopup(MouseEvent e){
-    if(e.isPopupTrigger()) {
-      popup = new JPopupMenu();
-      JMenuItem copy = new JMenuItem("Copy");
-      popup.add(copy);
-      textarea.add(popup);
-      popup.show(e.getComponent(), e.getX(), e.getY());
-    }
-  }
 }
 
 /*
