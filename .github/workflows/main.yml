@@ -22,7 +22,7 @@ jobs:
         allowUpdates: true
         tag: release
         prerelease: false
-        name: "update v0.5" 
-        body: "Added right click event(popup menu)" 
+        name: "update v0.6" 
+        body: "Added delete event" 
         artifacts: "texteditor.jar"
         token: ${{ secrets.GITHUB_TOKEN }}

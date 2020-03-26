@@ -76,6 +76,7 @@ class Main {
     JMenuItem copy = new JMenuItem("Copy...");
     JMenuItem cut = new JMenuItem("Cut...");
     JMenuItem paste = new JMenuItem("Paste...");
+    JMenuItem delete = new JMenuItem("Delete...");
     JMenu help = new JMenu("Help");
     JMenuItem about = new JMenuItem("About...");
 
@@ -92,6 +93,7 @@ class Main {
     edit.add(copy);
     edit.add(cut);
     edit.add(paste);
+    edit.add(delete);
     menubar.add(help);
     help.add(about);
 
@@ -187,6 +189,13 @@ class Main {
       }
     });
 
+    delete.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.replaceSelection("");
+      }
+    });
+
     about.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -211,10 +220,12 @@ class Main {
     JMenuItem copy_popup = new JMenuItem("Copy");
     JMenuItem cut_popup = new JMenuItem("Cut");
     JMenuItem paste_popup = new JMenuItem("Paste");
+    JMenuItem delete_popup = new JMenuItem("Delete");
     popup.add(selectall_popup);
     popup.add(copy_popup);
     popup.add(cut_popup);
     popup.add(paste_popup);
+    popup.add(delete_popup);
     textarea.setComponentPopupMenu(popup);
 
     selectall_popup.addActionListener(new ActionListener() {
@@ -242,6 +253,13 @@ class Main {
       @Override
       public void actionPerformed(ActionEvent e) {
         textarea.paste();
+      }
+    });
+
+    delete_popup.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        textarea.replaceSelection("");
       }
     });
 
