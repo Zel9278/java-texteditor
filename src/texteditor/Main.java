@@ -4,6 +4,7 @@ import javax.swing.filechooser.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Objects;
 import javax.swing.*;
 
 class Main {
@@ -11,7 +12,7 @@ class Main {
   JTextArea textarea;
   JPopupMenu popup;
 
-  public static void main(String args[]){
+  public static void main(String[] args){
     new Main();
   }
 
@@ -21,7 +22,7 @@ class Main {
 
   private void startup() {
     JWindow window = new JWindow();
-    window.getContentPane().add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("resources/load.gif")), SwingConstants.CENTER));
+    window.getContentPane().add(new JLabel(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("resources/load.gif"))), SwingConstants.CENTER));
     window.setSize(640, 300);
     window.addWindowListener(null);
     window.setLocationRelativeTo(null);
@@ -52,7 +53,7 @@ class Main {
   private void mainEditor() {
     frame = new JFrame("Text Editor");
     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    frame.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("resources/icon.png")).getImage());
+    frame.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("resources/icon.png"))).getImage());
     
     frame.setSize(400,370);
     frame.addWindowListener(null);
@@ -102,104 +103,58 @@ class Main {
     textarea.setEditable(true);
     textarea.setBounds(0,0, 400,370);
   
-    newfile.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        frame.setTitle("Text Editor - No File");
-        textarea.setText("");
-      }
+    newfile.addActionListener(e -> {
+      frame.setTitle("Text Editor - No File");
+      textarea.setText("");
     });
   
-    open.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        JFileChooser loaddialog = new JFileChooser();
-        FileNameExtensionFilter FileType_TEXT_Load = new FileNameExtensionFilter("TextFile (*.text *.txt *.yml *.java)", "text", "txt", "yml", "java");
-        loaddialog.setFileFilter(FileType_TEXT_Load);
-        
-        int Result = loaddialog.showOpenDialog(frame);
-        
-        if(Result == JFileChooser.APPROVE_OPTION) {
-          File LoadedFile = loaddialog.getSelectedFile();
-          frame.setTitle("Text Editor - " + LoadedFile.getName());
-          try{
-            textarea.read(new FileReader(LoadedFile),null);
-          }catch(IOException ioe){
-            ioe.printStackTrace();
-          }
+    open.addActionListener(e -> {
+      JFileChooser loaddialog = new JFileChooser();
+      FileNameExtensionFilter FileType_TEXT_Load = new FileNameExtensionFilter("TextFile (*.text *.txt *.yml *.java)", "text", "txt", "yml", "java");
+      loaddialog.setFileFilter(FileType_TEXT_Load);
+
+      int Result = loaddialog.showOpenDialog(frame);
+
+      if(Result == JFileChooser.APPROVE_OPTION) {
+        File LoadedFile = loaddialog.getSelectedFile();
+        frame.setTitle("Text Editor - " + LoadedFile.getName());
+        try{
+          textarea.read(new FileReader(LoadedFile),null);
+        }catch(IOException ioe){
+          ioe.printStackTrace();
         }
       }
     });
   
-    save.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        JFileChooser savedialog = new JFileChooser();
-        FileNameExtensionFilter FileType_TEXT_Save = new FileNameExtensionFilter("TextFile (*.text *.txt *.yml *.java)", "text", "txt", "yml", "java");
-        savedialog.setFileFilter(FileType_TEXT_Save);
-  
-        int Result = savedialog.showSaveDialog(frame);
-  
-        try {
-          if (Result == JFileChooser.APPROVE_OPTION) {
-            FileWriter writer = new FileWriter(savedialog.getSelectedFile());
-            writer.write(textarea.getText());
-            writer.close();
-          }
-        } catch (FileNotFoundException ioe) {
-          ioe.printStackTrace();
-        } catch (IOException ioe) {
-          ioe.printStackTrace();
+    save.addActionListener(e -> {
+      JFileChooser savedialog = new JFileChooser();
+      FileNameExtensionFilter FileType_TEXT_Save = new FileNameExtensionFilter("TextFile (*.text *.txt *.yml *.java)", "text", "txt", "yml", "java");
+      savedialog.setFileFilter(FileType_TEXT_Save);
+
+      int Result = savedialog.showSaveDialog(frame);
+
+      try {
+        if (Result == JFileChooser.APPROVE_OPTION) {
+          FileWriter writer = new FileWriter(savedialog.getSelectedFile());
+          writer.write(textarea.getText());
+          writer.close();
         }
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
       }
     });
     
-    exit.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        System.exit(0);
-      }
-    });
-
-    selectall.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.selectAll();
-      }
-    });
-
-    copy.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.copy();
-      }
-    });
-
-    cut.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.cut();
-      }
-    });
-
-    paste.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.paste();
-      }
-    });
-
-    delete.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.replaceSelection("");
-      }
-    });
+    exit.addActionListener(e -> System.exit(0));
+    selectall.addActionListener(e -> textarea.selectAll());
+    copy.addActionListener(e -> textarea.copy());
+    cut.addActionListener(e -> textarea.cut());
+    paste.addActionListener(e -> textarea.paste());
+    delete.addActionListener(e -> textarea.replaceSelection(""));
 
     about.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ImageIcon originalIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/icon.png"));
+        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("resources/icon.png")));
         ImageIcon icon = new ImageIcon(originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
 
         JOptionPane.showMessageDialog(
@@ -228,47 +183,18 @@ class Main {
     popup.add(delete_popup);
     textarea.setComponentPopupMenu(popup);
 
-    selectall_popup.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.selectAll();
-      }
-    });
-
-    copy_popup.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.copy();
-      }
-    });
-
-    cut_popup.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.cut();
-      }
-    });
-
-    paste_popup.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.paste();
-      }
-    });
-
-    delete_popup.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        textarea.replaceSelection("");
-      }
-    });
+    selectall_popup.addActionListener(e -> textarea.selectAll());
+    copy_popup.addActionListener(e -> textarea.copy());
+    cut_popup.addActionListener(e -> textarea.cut());
+    paste_popup.addActionListener(e -> textarea.paste());
+    delete_popup.addActionListener(e -> textarea.replaceSelection(""));
 
     JPanel panel = new JPanel();
     frame.add(panel);  
     panel.add(scrollpane);
     frame.getContentPane().add(scrollpane, BorderLayout.CENTER);
     frame.setVisible(true);
-  };
+  }
 }
 
 /*

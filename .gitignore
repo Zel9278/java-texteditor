@@ -1,8 +1,8 @@
 README.txt
+java-texteditor.iml
 texteditor.jar
 hs_err*
 .classpath
 .project
-/.settings/*
-/.vs/*
-/.vscode/*
+out/*
+.idea/*
